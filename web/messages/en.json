@@ -1,0 +1,78 @@
+{
+  "common": {
+    "appName": "HealthTrack Pro",
+    "appTagline": "Your Health Journey",
+    "appDescription": "Track your nutrition, set goals, and achieve better health",
+    "logout": "Log Out"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "diary": "Diary",
+    "reports": "Reports",
+    "goalSimulation": "Goal Simulation",
+    "privacy": "Privacy",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Data Dashboard",
+    "subtitle": "Review your historical trends and performance metrics.",
+    "timePeriod": {
+      "7days": "7 Days",
+      "30days": "30 Days",
+      "90days": "90 Days"
+    },
+    "weightTrend": {
+      "title": "Weight Trend",
+      "unit": "kg",
+      "start": "Start",
+      "current": "Current"
+    },
+    "greenScore": {
+      "title": "Green Score Trend",
+      "average": "Avg",
+      "components": "Score Components (Avg)",
+      "structure": "Structure",
+      "excessControl": "Excess Control",
+      "processing": "Processing",
+      "high": "High",
+      "medium": "Medium",
+      "good": "Good",
+      "low": "Low"
+    },
+    "nutritionHistory": {
+      "title": "Nutritional Intake History",
+      "protein": "Protein",
+      "fiber": "Fiber",
+      "sugar": "Sugar",
+      "calories": "Calories",
+      "water": "Water"
+    },
+    "triggerFoods": {
+      "title": "Top Trigger Foods",
+      "highImpact": "High Impact",
+      "mediumImpact": "Medium Impact",
+      "lowImpact": "Low Impact",
+      "points": "pts"
+    },
+    "triggerTimes": {
+      "title": "Trigger Times",
+      "description": "Analysis of your past 30 days shows <strong>40%</strong> of excess sugar consumption occurred during late evening hours."
+    }
+  },
+  "goalSimulation": {
+    "title": "Goal Simulation & Path",
+    "subtitle": "Plan your health goals and visualize your journey"
+  },
+  "reports": {
+    "title": "Reports & Export",
+    "subtitle": "Generate and share your health reports"
+  },
+  "privacy": {
+    "title": "Privacy & Data Management",
+    "subtitle": "Manage your data and privacy settings"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Customize your app preferences"
+  }
+}

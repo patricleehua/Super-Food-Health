@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Goal Simulation &amp; Path - HealthTrack Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec80",
+                        "primary-hover": "#0fd673",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102219",
+                        "surface-dark": "#162b21",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>input[type=range] {
+            -webkit-appearance: none; 
+            background: transparent; 
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 6px solid #13ec80;
+            cursor: pointer;
+            margin-top: -10px; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.1s ease;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: #e5e7eb;
+            border-radius: 3px;
+        }
+        .dark input[type=range]::-webkit-slider-runnable-track {
+            background: #2f4538;
+        }
+        input[type=range]:focus {
+            outline: none;
+        }.segmented-control {
+            background: #f3f4f6;
+            padding: 4px;
+            border-radius: 0.75rem;
+            display: inline-flex;
+            position: relative;
+        }
+        .dark .segmented-control {
+            background: #1f352b;
+        }
+        .segmented-item {
+            position: relative;
+            z-index: 1;
+        }
+        .segmented-indicator {
+            position: absolute;
+            height: calc(100% - 8px);
+            top: 4px;
+            border-radius: 0.5rem;
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111814] dark:text-white font-display min-h-screen flex flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f4f2] dark:border-[#2f4538] px-4 md:px-10 py-3 bg-white dark:bg-background-dark sticky top-0 z-50">
+<div class="flex items-center gap-4 text-[#111814] dark:text-white">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">HealthTrack Pro</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="hidden md:flex items-center gap-9">
+<a class="text-[#111814] dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Dashboard</a>
+<a class="text-[#111814] dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Diary</a>
+<a class="text-[#111814] dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Reports</a>
+<a class="text-[#111814] dark:text-white text-sm font-bold leading-normal border-b-2 border-primary pb-0.5" href="#">Goal Simulation</a>
+<a class="text-[#111814] dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Settings</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden md:flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/10 text-[#111814] dark:text-primary hover:bg-primary hover:text-[#111814] transition-all text-sm font-bold leading-normal tracking-[0.015em]">
+<span class="truncate">Log Out</span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 border-2 border-primary" data-alt="User profile picture placeholder with abstract geometric pattern" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuARVaaLJoVN1fTPyCgl1ZfosSzPGZQT0I-EZNUgdj7w6ayTaEvJaLM_FwYG2amsmqXHedsmvas1eXJzIM6GJbWKkeD7c1ztxlWylZevxaVNqZCpraWatYSEgcRbc41zvsW6NFTR4jgYFNG5tHKmD85deWcqdhoFJLL_Kp8z3i9YQpHb8FjHa_ngh-MtSwVCyHMCDszFY9gUmw0aOJdFmnq6U6mC9znHIA0Pd73_hsUghjfQU97khA9z9-thxihttLVlDaJ4oTY3Ew");'></div>
+</div>
+</div>
+</header>
+<main class="flex-1 layout-container flex flex-col items-center py-8 px-4 md:px-10 lg:px-20 overflow-x-hidden">
+<div class="w-full max-w-7xl flex flex-col gap-6">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 pb-4 border-b border-gray-200 dark:border-gray-800">
+<div class="flex flex-col gap-2">
+<h1 class="text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em] text-[#111814] dark:text-white">Goal Simulation</h1>
+<p class="text-[#618975] dark:text-gray-400 text-base font-normal leading-normal max-w-2xl">
+                        Design your future path. Adjust parameters to see projected outcomes.
+                    </p>
+</div>
+<div class="segmented-control">
+<button class="segmented-item px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">Strict Mode</button>
+<button class="segmented-item px-4 py-2 text-sm font-bold text-[#111814] bg-white dark:bg-[#2f4538] dark:text-white shadow-sm rounded-md ring-1 ring-black/5">Sustainable</button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-2">
+<div class="lg:col-span-4 flex flex-col gap-6">
+<div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-lg shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-800 ring-1 ring-black/5">
+<div class="flex items-center gap-2 mb-6 text-[#111814] dark:text-white pb-4 border-b border-gray-100 dark:border-gray-800">
+<span class="material-symbols-outlined text-primary">tune</span>
+<h2 class="text-lg font-bold">Simulation Parameters</h2>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<label class="flex flex-col gap-2 group cursor-pointer">
+<span class="text-sm font-semibold text-gray-600 dark:text-gray-300 group-hover:text-primary transition-colors">Starting Weight</span>
+<div class="relative">
+<input class="w-full h-12 px-4 pr-8 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-background-dark text-lg font-bold focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" type="number" value="84.5"/>
+<span class="absolute right-3 top-3.5 text-xs font-bold text-gray-400">kg</span>
+</div>
+</label>
+<label class="flex flex-col gap-2 group cursor-pointer">
+<span class="text-sm font-semibold text-gray-600 dark:text-gray-300 group-hover:text-primary transition-colors">Target Goal</span>
+<div class="relative">
+<input class="w-full h-12 px-4 pr-8 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-background-dark text-lg font-bold focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" type="number" value="75.0"/>
+<span class="absolute right-3 top-3.5 text-xs font-bold text-gray-400">kg</span>
+</div>
+</label>
+</div>
+<div class="mb-8 group">
+<div class="flex justify-between items-center mb-3">
+<span class="text-sm font-semibold text-gray-600 dark:text-gray-300 group-hover:text-primary transition-colors">Projection Period</span>
+<span class="text-sm font-bold text-primary bg-primary/10 px-2 py-0.5 rounded">12 Weeks</span>
+</div>
+<input class="w-full bg-transparent appearance-none cursor-pointer" max="52" min="4" type="range" value="12"/>
+<div class="flex justify-between text-xs text-gray-400 mt-2 font-medium">
+<span>1 mo</span>
+<span>6 mo</span>
+<span>12 mo</span>
+</div>
+</div>
+<div class="flex items-center gap-2 mb-4 mt-2">
+<span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Daily Variables</span>
+<div class="h-px bg-gray-100 dark:bg-gray-800 flex-1"></div>
+</div>
+<div class="mb-6 group">
+<div class="flex justify-between items-center mb-3">
+<span class="text-sm font-medium text-gray-700 dark:text-gray-200 flex items-center gap-2 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-base">fitness_center</span>
+                                    Workouts/Week
+                                </span>
+<span class="text-sm font-bold text-[#111814] dark:text-white">3 sessions</span>
+</div>
+<input class="w-full bg-transparent appearance-none cursor-pointer" max="7" min="0" type="range" value="3"/>
+</div>
+<div class="mb-6 group">
+<div class="flex justify-between items-center mb-3">
+<span class="text-sm font-medium text-gray-700 dark:text-gray-200 flex items-center gap-2 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-base">directions_walk</span>
+                                    Daily Steps
+                                </span>
+<span class="text-sm font-bold text-[#111814] dark:text-white">8,500</span>
+</div>
+<input class="w-full bg-transparent appearance-none cursor-pointer" max="20000" min="2000" step="500" type="range" value="8500"/>
+</div>
+<div class="mb-2 group">
+<div class="flex justify-between items-center mb-3">
+<span class="text-sm font-medium text-gray-700 dark:text-gray-200 flex items-center gap-2 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-base">restaurant</span>
+                                    Takeaways/Week
+                                </span>
+<span class="text-sm font-bold text-[#111814] dark:text-white">1 meal</span>
+</div>
+<input class="w-full bg-transparent appearance-none cursor-pointer" max="10" min="0" type="range" value="1"/>
+</div>
+</div>
+<div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-100 dark:border-blue-900/50 flex gap-3 items-start animate-fade-in">
+<span class="material-symbols-outlined text-blue-600 dark:text-blue-400 shrink-0">auto_awesome</span>
+<div>
+<p class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase mb-1">Simulated Insight</p>
+<p class="text-sm text-blue-800 dark:text-blue-200 leading-relaxed">Increasing steps to <strong>10k</strong> changes your projected date by -2 weeks.</p>
+</div>
+</div>
+</div>
+<div class="lg:col-span-8 flex flex-col gap-6">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-white dark:bg-surface-dark p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col justify-between hover:border-primary/30 transition-colors cursor-help">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Plan Feasibility</h3>
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-black text-[#111814] dark:text-white">92%</span>
+</div>
+<div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 mt-3 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 92%"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col justify-between hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Projected Date</h3>
+<span class="material-symbols-outlined text-gray-400 text-xl">event</span>
+</div>
+<div class="flex flex-col">
+<span class="text-3xl font-black text-[#111814] dark:text-white">Nov 14</span>
+<span class="text-sm text-gray-500 font-medium">In exactly 12 weeks</span>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col justify-between hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<h3 class="text-sm font-medium text-gray-500 dark:text-gray-400">Projected Weekly Loss</h3>
+<span class="material-symbols-outlined text-gray-400 text-xl">trending_down</span>
+</div>
+<div class="flex flex-col">
+<span class="text-3xl font-black text-[#111814] dark:text-white">0.8 <span class="text-lg font-bold text-gray-400">kg</span></span>
+<span class="text-sm text-green-600 font-bold">Optimal Pace</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 h-[360px] relative flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-bold text-lg text-[#111814] dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-gray-400">show_chart</span>
+                                Projected Trajectory
+                            </h3>
+<div class="flex items-center gap-4 text-xs font-bold">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 bg-primary"></span>
+<span class="text-gray-600 dark:text-gray-300">Projected Path</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-0.5 border-t border-dashed border-gray-400"></span>
+<span class="text-gray-600 dark:text-gray-300">Target Goal</span>
+</div>
+</div>
+</div>
+<div class="flex-1 w-full relative">
+<div class="absolute inset-0 flex flex-col justify-between text-xs text-gray-300 dark:text-gray-600 pointer-events-none pb-8 pl-10 pr-4">
+<div class="w-full border-t border-dashed border-gray-50 dark:border-gray-800 relative"><span class="absolute -left-8 -top-2">85kg</span></div>
+<div class="w-full border-t border-dashed border-gray-50 dark:border-gray-800 relative"><span class="absolute -left-8 -top-2">82kg</span></div>
+<div class="w-full border-t border-dashed border-gray-50 dark:border-gray-800 relative"><span class="absolute -left-8 -top-2">79kg</span></div>
+<div class="w-full border-t border-dashed border-gray-50 dark:border-gray-800 relative"><span class="absolute -left-8 -top-2">76kg</span></div>
+<div class="w-full border-b border-gray-200 dark:border-gray-700 relative"><span class="absolute -left-8 -bottom-0">73kg</span></div>
+</div>
+<div class="absolute bottom-0 left-10 right-0 flex justify-between text-xs text-gray-400 font-bold pt-2 uppercase tracking-wider">
+<span>Start</span>
+<span>+4 Wks</span>
+<span>+8 Wks</span>
+<span>+12 Wks</span>
+</div>
+<svg class="absolute inset-0 w-full h-full pb-8 pl-10 pr-4 overflow-visible" preserveAspectRatio="none" viewBox="0 0 400 200">
+<defs>
+<linearGradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#13ec80" stop-opacity="0.15"></stop>
+<stop offset="100%" stop-color="#13ec80" stop-opacity="0.0"></stop>
+</linearGradient>
+</defs>
+<line opacity="0.5" stroke="#9ca3af" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="400" y1="166" y2="166"></line>
+<text fill="#9ca3af" font-size="10" font-weight="bold" x="405" y="170">Target</text>
+<path d="M0,20 C100,20 200,130 400,150 L400,190 C250,190 150,50 0,50 Z" fill="url(#areaGradient)"></path>
+<path d="M0,35 C130,35 200,140 400,166" fill="none" filter="drop-shadow(0 4px 4px rgba(19, 236, 128, 0.2))" stroke="#13ec80" stroke-linecap="round" stroke-width="3" vector-effect="non-scaling-stroke"></path>
+<circle class="cursor-pointer hover:scale-150 transition-transform origin-center" cx="200" cy="110" fill="white" r="5" stroke="#13ec80" stroke-width="3"></circle>
+<g transform="translate(160, 65)">
+<rect fill="#111814" fill-opacity="0.9" height="32" rx="6" width="80"></rect>
+<text fill="white" font-size="11" font-weight="bold" text-anchor="middle" x="40" y="20">Week 6: 80kg</text>
+<path d="M40,32 L34,38 L46,38 Z" fill="#111814" fill-opacity="0.9"></path>
+</g>
+</svg>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+<h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">target</span>
+                                Recommended Daily Targets
+                            </h3>
+<div class="space-y-6">
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="p-2.5 rounded-xl bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">local_fire_department</span>
+</div>
+<div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Calorie Range</p>
+<p class="text-xl font-bold text-[#111814] dark:text-white">2,100 - 2,300</p>
+</div>
+</div>
+<span class="text-xs font-bold px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-gray-600 dark:text-gray-300">kcal</span>
+</div>
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="p-2.5 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">egg_alt</span>
+</div>
+<div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Protein Goal</p>
+<p class="text-xl font-bold text-[#111814] dark:text-white">140g - 160g</p>
+</div>
+</div>
+<span class="text-xs font-bold px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-gray-600 dark:text-gray-300">grams</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-br from-[#13ec80]/10 via-[#13ec80]/5 to-transparent dark:from-[#13ec80]/10 dark:to-surface-dark rounded-2xl p-6 border border-primary/20 flex flex-col justify-between">
+<div>
+<h3 class="text-lg font-bold text-[#111814] dark:text-white mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">lightbulb</span>
+                                    Sustainability Advice
+                                </h3>
+<p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                                    To achieve this projection safely, focus on <strong>protein distribution</strong> throughout the day. Your input parameters are aggressive but sustainable if step counts are maintained strictly.
+                                </p>
+</div>
+<div class="mt-4 pt-4 border-t border-primary/10">
+<p class="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 uppercase tracking-wide">Projected Impact</p>
+<div class="flex items-center gap-2 text-sm font-bold text-[#111814] dark:text-white">
+<span class="material-symbols-outlined text-green-500 text-lg">trending_up</span>
+<span>+15% Success Probability</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 pt-2">
+<button class="flex-1 h-14 bg-[#13ec80] hover:bg-[#0fd673] active:scale-[0.99] text-[#111814] font-bold rounded-xl shadow-lg shadow-green-500/20 hover:shadow-green-500/30 transition-all flex items-center justify-center gap-2 text-lg">
+<span class="material-symbols-outlined">save_as</span>
+                            Commit to this Plan
+                        </button>
+<button class="flex-1 h-14 bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 font-bold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 active:scale-[0.99] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">restart_alt</span>
+                            Reset Parameters
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+</body></html>

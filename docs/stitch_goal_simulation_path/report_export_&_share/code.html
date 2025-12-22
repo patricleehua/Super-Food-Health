@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Report Export &amp; Share - HealthTrack</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec80",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102219",
+                        "text-main": "#111814",
+                        "text-secondary": "#618975",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-background-light text-text-main font-display overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- SIDEBAR -->
+<div class="w-64 flex-shrink-0 bg-white border-r border-gray-100 flex flex-col justify-between h-full p-4 overflow-y-auto hidden md:flex">
+<div class="flex flex-col gap-6">
+<!-- User Profile -->
+<div class="flex gap-3 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 shadow-sm" data-alt="Profile picture of user" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBhNhedWR26EYPggOh33voCnS8MTwI1-2V8W_Js73ySsKaRv4Fw9VSFVIJH9lsIDgPPFXHhgZr1M5iMTtk9uJqpO-lIiq1zAji4C5hxXd2HpxbDx38Y1Cv3-ZRqonuoc_onZtp3GXEyyDmiBnEzO42PpSAtimhMdMaN05w_RA-d1QxsnsE6SXZaO2cuBitHzz6DuEfW-2D9lohuGDrsfLHHUcx21LK3x9vMCQ5aMZ1ktOa86XPO6hmbxTNp6CAaMId9s1uQUxeN5g");'></div>
+<div class="flex flex-col">
+<h1 class="text-text-main text-base font-bold leading-tight">HealthTrack</h1>
+<p class="text-text-secondary text-xs font-medium uppercase tracking-wider">Pro Member</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-background-light group transition-colors" href="#">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-text-main">dashboard</span>
+<p class="text-text-secondary group-hover:text-text-main text-sm font-medium">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-background-light group transition-colors" href="#">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-text-main">book</span>
+<p class="text-text-secondary group-hover:text-text-main text-sm font-medium">Diary</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-background-light group transition-colors" href="#">
+<span class="material-symbols-outlined icon-filled text-text-main">description</span>
+<p class="text-text-main text-sm font-bold">Reports</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-background-light group transition-colors" href="#">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-text-main">watch</span>
+<p class="text-text-secondary group-hover:text-text-main text-sm font-medium">Devices</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-background-light group transition-colors" href="#">
+<span class="material-symbols-outlined text-text-secondary group-hover:text-text-main">settings</span>
+<p class="text-text-secondary group-hover:text-text-main text-sm font-medium">Settings</p>
+</a>
+</nav>
+</div>
+<div class="p-4 bg-background-light rounded-xl">
+<div class="flex items-center gap-2 mb-2 text-text-main font-bold text-sm">
+<span class="material-symbols-outlined text-primary icon-filled">verified_user</span>
+<span>HIPAA Compliant</span>
+</div>
+<p class="text-xs text-text-secondary leading-relaxed">Your data is encrypted and secure. Access logs are available in settings.</p>
+</div>
+</div>
+<!-- MAIN CONTENT -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header -->
+<header class="bg-white border-b border-gray-100 px-6 py-5 md:px-10 flex-shrink-0 z-10">
+<div class="max-w-6xl mx-auto w-full">
+<div class="flex flex-col gap-1">
+<h1 class="text-text-main text-3xl md:text-4xl font-black tracking-tight">Report Center</h1>
+<p class="text-text-secondary text-base font-medium">Generate insights, export data, and manage access permissions.</p>
+</div>
+</div>
+</header>
+<!-- Scrollable Body -->
+<div class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-10 bg-background-light">
+<div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 pb-20">
+<!-- LEFT COLUMN: CONFIGURATION & PREVIEW (8 cols) -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Configuration Card -->
+<div class="bg-white rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-6 flex flex-col gap-6">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-100 pb-4">
+<h2 class="text-text-main text-lg font-bold">Report Configuration</h2>
+<!-- Segmented Control -->
+<div class="flex h-10 items-center justify-center rounded-lg bg-background-light p-1">
+<label class="flex cursor-pointer h-full items-center justify-center rounded-md px-4 transition-all has-[:checked]:bg-white has-[:checked]:shadow-sm has-[:checked]:text-text-main text-text-secondary text-sm font-medium">
+<span>Weekly</span>
+<input class="hidden" name="period" type="radio" value="Weekly"/>
+</label>
+<label class="flex cursor-pointer h-full items-center justify-center rounded-md px-4 transition-all has-[:checked]:bg-white has-[:checked]:shadow-sm has-[:checked]:text-text-main text-text-secondary text-sm font-medium">
+<span>Monthly</span>
+<input checked="" class="hidden" name="period" type="radio" value="Monthly"/>
+</label>
+<label class="flex cursor-pointer h-full items-center justify-center rounded-md px-4 transition-all has-[:checked]:bg-white has-[:checked]:shadow-sm has-[:checked]:text-text-main text-text-secondary text-sm font-medium">
+<span>Phase</span>
+<input class="hidden" name="period" type="radio" value="Phase"/>
+</label>
+</div>
+</div>
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Calendar Mini -->
+<div class="flex-1 min-w-[300px]">
+<div class="flex items-center justify-between mb-4">
+<span class="text-sm font-bold text-text-main">Selected Range</span>
+<div class="flex gap-1">
+<button class="size-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-text-main">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<span class="text-sm font-bold self-center">Oct 2023</span>
+<button class="size-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-text-main">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Simplified Calendar Grid -->
+<div class="grid grid-cols-7 gap-y-2 text-center text-xs font-medium text-text-secondary">
+<span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+<!-- Days -->
+<span class="py-2 text-gray-300">29</span><span class="py-2 text-gray-300">30</span>
+<span class="py-2 text-text-main hover:bg-background-light rounded-full cursor-pointer">1</span>
+<span class="py-2 text-text-main hover:bg-background-light rounded-full cursor-pointer">2</span>
+<span class="py-2 text-text-main hover:bg-background-light rounded-full cursor-pointer">3</span>
+<span class="py-2 text-text-main hover:bg-background-light rounded-full cursor-pointer">4</span>
+<div class="col-span-7 grid grid-cols-7 gap-0">
+<span class="py-2 bg-primary/20 text-text-main rounded-l-full font-bold">5</span>
+<span class="py-2 bg-primary/20 text-text-main font-bold">6</span>
+<span class="py-2 bg-primary/20 text-text-main font-bold">7</span>
+<span class="py-2 bg-primary/20 text-text-main font-bold">8</span>
+<span class="py-2 bg-primary/20 text-text-main font-bold">9</span>
+<span class="py-2 bg-primary/20 text-text-main font-bold">10</span>
+<span class="py-2 bg-primary/20 text-text-main rounded-r-full font-bold">11</span>
+</div>
+<span class="py-2 text-text-main hover:bg-background-light rounded-full cursor-pointer">12</span>
+<span class="py-2 text-text-main hover:bg-background-light rounded-full cursor-pointer">13</span>
+<span class="py-2 text-text-main hover:bg-background-light rounded-full cursor-pointer">14</span>
+<span class="py-2 text-text-main hover:bg-background-light rounded-full cursor-pointer">15</span>
+<span class="py-2 text-text-main hover:bg-background-light rounded-full cursor-pointer">16</span>
+<span class="py-2 text-text-main hover:bg-background-light rounded-full cursor-pointer">17</span>
+<span class="py-2 text-text-main hover:bg-background-light rounded-full cursor-pointer">18</span>
+</div>
+</div>
+<!-- Metrics Selection -->
+<div class="flex-1">
+<div class="flex items-center justify-between mb-4">
+<span class="text-sm font-bold text-text-main">Include Metrics</span>
+<button class="text-xs font-medium text-primary hover:underline">Select All</button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<label class="group flex flex-col p-3 border border-gray-200 rounded-lg cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all">
+<div class="flex justify-between items-start mb-1">
+<span class="material-symbols-outlined text-text-secondary group-has-[:checked]:text-primary">bedtime</span>
+<input checked="" class="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+</div>
+<span class="text-sm font-bold text-text-main">Sleep</span>
+<span class="text-xs text-text-secondary">Hypnogram &amp; Stages</span>
+</label>
+<label class="group flex flex-col p-3 border border-gray-200 rounded-lg cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all">
+<div class="flex justify-between items-start mb-1">
+<span class="material-symbols-outlined text-text-secondary group-has-[:checked]:text-primary">monitor_heart</span>
+<input checked="" class="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+</div>
+<span class="text-sm font-bold text-text-main">Vitals</span>
+<span class="text-xs text-text-secondary">HRV, RHR, SpO2</span>
+</label>
+<label class="group flex flex-col p-3 border border-gray-200 rounded-lg cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all">
+<div class="flex justify-between items-start mb-1">
+<span class="material-symbols-outlined text-text-secondary group-has-[:checked]:text-primary">directions_run</span>
+<input checked="" class="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+</div>
+<span class="text-sm font-bold text-text-main">Activity</span>
+<span class="text-xs text-text-secondary">Workouts &amp; Steps</span>
+</label>
+<label class="group flex flex-col p-3 border border-gray-200 rounded-lg cursor-pointer has-[:checked]:border-primary has-[:checked]:bg-primary/5 transition-all">
+<div class="flex justify-between items-start mb-1">
+<span class="material-symbols-outlined text-text-secondary group-has-[:checked]:text-primary">restaurant</span>
+<input class="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+</div>
+<span class="text-sm font-bold text-text-main">Nutrition</span>
+<span class="text-xs text-text-secondary">Macros &amp; Logs</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Live Preview Card -->
+<div class="bg-white rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col overflow-hidden border border-gray-100">
+<div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+<h3 class="text-sm font-bold text-text-main flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-text-secondary">visibility</span>
+                                    Report Preview
+                                </h3>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-xs font-medium text-text-secondary">Live Update</span>
+</div>
+</div>
+<!-- Mock PDF Document -->
+<div class="p-8 bg-gray-100 flex justify-center min-h-[400px]">
+<div class="w-full max-w-[600px] bg-white shadow-lg p-8 flex flex-col gap-6 scale-95 origin-top">
+<!-- PDF Header -->
+<div class="flex justify-between items-end border-b pb-4 border-gray-100">
+<div>
+<div class="h-6 w-32 bg-gray-800 rounded mb-2"></div>
+<div class="h-3 w-48 bg-gray-300 rounded"></div>
+</div>
+<div class="text-right">
+<div class="h-4 w-24 bg-primary/40 rounded mb-1 ml-auto"></div>
+<div class="h-3 w-20 bg-gray-200 rounded ml-auto"></div>
+</div>
+</div>
+<!-- PDF Chart Mock -->
+<div class="flex flex-col gap-2">
+<div class="h-4 w-32 bg-gray-200 rounded"></div>
+<div class="h-32 w-full bg-gray-50 rounded-lg border border-gray-100 relative overflow-hidden">
+<div class="absolute bottom-0 left-0 w-full flex items-end justify-between px-4 pb-2 h-full gap-2">
+<div class="w-full bg-primary/20 rounded-t h-[40%]"></div>
+<div class="w-full bg-primary/30 rounded-t h-[60%]"></div>
+<div class="w-full bg-primary/20 rounded-t h-[30%]"></div>
+<div class="w-full bg-primary/60 rounded-t h-[80%]"></div>
+<div class="w-full bg-primary/40 rounded-t h-[50%]"></div>
+<div class="w-full bg-primary/20 rounded-t h-[45%]"></div>
+<div class="w-full bg-primary/30 rounded-t h-[55%]"></div>
+</div>
+</div>
+</div>
+<!-- PDF Stats Grid -->
+<div class="grid grid-cols-3 gap-4">
+<div class="p-3 bg-gray-50 rounded border border-gray-100">
+<div class="h-3 w-12 bg-gray-300 rounded mb-2"></div>
+<div class="h-6 w-16 bg-gray-800 rounded"></div>
+</div>
+<div class="p-3 bg-gray-50 rounded border border-gray-100">
+<div class="h-3 w-12 bg-gray-300 rounded mb-2"></div>
+<div class="h-6 w-16 bg-gray-800 rounded"></div>
+</div>
+<div class="p-3 bg-gray-50 rounded border border-gray-100">
+<div class="h-3 w-12 bg-gray-300 rounded mb-2"></div>
+<div class="h-6 w-16 bg-gray-800 rounded"></div>
+</div>
+</div>
+<!-- Privacy Disclaimer in PDF -->
+<div class="mt-auto pt-4 border-t border-gray-100 flex items-center gap-2 opacity-50">
+<div class="size-4 bg-gray-300 rounded-full"></div>
+<div class="h-2 w-full bg-gray-200 rounded"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: ACTIONS & ACCESS (4 cols) -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Export Actions Card -->
+<div class="bg-white rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-6 flex flex-col gap-4 sticky top-6">
+<h2 class="text-text-main text-lg font-bold">Export &amp; Share</h2>
+<!-- Privacy Toggle -->
+<div class="flex items-center justify-between p-3 bg-background-light rounded-lg">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-text-main">Desensitized Mode</span>
+<span class="text-xs text-text-secondary">Show trends, hide raw values</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Buttons -->
+<button class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-green-400 text-text-main font-bold py-3 px-4 rounded-lg transition-colors shadow-sm shadow-primary/20">
+<span class="material-symbols-outlined icon-filled">download</span>
+                                Download PDF Report
+                            </button>
+<button class="w-full flex items-center justify-center gap-2 bg-white border border-gray-200 hover:bg-gray-50 text-text-main font-bold py-3 px-4 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-primary">link</span>
+                                Generate Web Link
+                            </button>
+<p class="text-center text-xs text-text-secondary mt-1">Links expire after 7 days automatically.</p>
+</div>
+<!-- Access Management Card -->
+<div class="bg-white rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-6 flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<h2 class="text-text-main text-lg font-bold">Coach Access</h2>
+<button class="size-8 flex items-center justify-center rounded-full bg-background-light hover:bg-gray-200 text-text-main">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+<p class="text-sm text-text-secondary">Grant view-only access to nutritionists or coaches.</p>
+<div class="flex flex-col gap-3">
+<!-- User 1 -->
+<div class="flex items-center justify-between p-3 border border-gray-100 rounded-lg">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-cover bg-center bg-gray-200" data-alt="Coach profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD9QwBpI3sQynYnJaNlMWXi9ZA-OgEZnRf6sbrpAyI0XacfLfOaA98NTHhWwiPc9zX0OD09Dz6hWs64wNHElVozlrvflWZiiwmNatf1QBuVQo4NOvf4kuphk7y5ePYiouXOZXRKJfzwSYMQEciSsBHE-X32ycVwk_R6VIg19lm_xQrKGPaPamsnbRPZbQgXA-gPBUZE1LgAXzT5T_W58dAIk_c2zcay_k4NOLWz80hx6dLzw3TymoFQ6bIw00LTuzfe5W8k5izCGw');"></div>
+<div>
+<p class="text-sm font-bold text-text-main">Dr. Sarah Smith</p>
+<p class="text-xs text-text-secondary">Nutritionist</p>
+</div>
+</div>
+<button class="text-gray-400 hover:text-red-500 transition-colors p-1" title="Revoke Access">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+<!-- User 2 -->
+<div class="flex items-center justify-between p-3 border border-gray-100 rounded-lg">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-cover bg-center bg-gray-200" data-alt="Trainer profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBnde-rOfdU2iheDOWHWM9ALkMslEGonhXtb9wgXzBP-BeogZOF1ah1vNiIUGHL8g9wK7XzRGZBlSEdUQa7zYcLW2k2ix2UP_6bCxmIxkuMvtVOCPLOenPvVIOU3fv9K0kwl2UrZHGluvQBG7JQoi_1rBiaLOLnmEhYeFc8mBCkRPpY43FNxQNyjpSfJWhnR-ZzmeklzpHOAfRihP63qoKRWqoirWziBcDjgB_7DufNKeeg4MJPoCgo_IB09beoQu9kF4LTHQEHtQ');"></div>
+<div>
+<p class="text-sm font-bold text-text-main">Coach Mike</p>
+<p class="text-xs text-text-secondary">Fitness Trainer</p>
+</div>
+</div>
+<button class="text-gray-400 hover:text-red-500 transition-colors p-1" title="Revoke Access">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+</div>
+<div class="mt-2 p-3 bg-blue-50 rounded-lg border border-blue-100 flex gap-3">
+<span class="material-symbols-outlined text-blue-500 text-xl flex-shrink-0">info</span>
+<p class="text-xs text-blue-800">
+                                    Coaches can only view data from the last 30 days unless specified otherwise.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

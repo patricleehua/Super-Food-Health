@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HealthTrack Data Dashboard</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec80",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102219",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2c24",
+                        "text-main": "#111814",
+                        "text-muted": "#618975",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main font-display antialiased overflow-hidden h-screen flex">
+<aside class="w-64 h-full bg-surface-light dark:bg-surface-dark border-r border-[#dbe6e0] dark:border-[#2a3c34] flex-shrink-0 flex flex-col transition-colors duration-300 hidden md:flex">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-8">
+<div class="bg-primary/20 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined text-3xl">monitor_heart</span>
+</div>
+<div>
+<h1 class="text-text-main dark:text-white text-lg font-bold leading-none">HealthTrack</h1>
+<p class="text-text-muted text-xs font-medium">Pro Plan</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-text-main dark:text-white group" href="#">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">bar_chart</span>
+<span class="text-sm font-bold">Data Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-background-light dark:hover:bg-[#23352d] transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">edit_note</span>
+<span class="text-sm font-medium">Food Log</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-background-light dark:hover:bg-[#23352d] transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">person</span>
+<span class="text-sm font-medium">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-background-light dark:hover:bg-[#23352d] transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto p-6 border-t border-[#dbe6e0] dark:border-[#2a3c34]">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBhWHs9A7sxDXdZOxD5mqW3w6CgzJF8o_lP4YdxTV0iBXFJJNrbHkA7cwkSs4Zec6G3g892wVjVE34r3G8NBqKCDtbsX3o6UNMXfQ3l0qqfscadE6QnJA3yaMH7wcj6DPJ1qTT4UbqwntmYJQ97mN5Adxrw9RsFIe8jCX6u_n9vOKWCM1dDMYdVtQZqk8pGBV2rwUOBYPcaCFex5WUpTZ3Tv2y_Wr85FBr3mAdnx7jArKB2tz9_oDZLBJhgVTl7T_1a47SKL7oOwA");'></div>
+<div class="flex flex-col">
+<p class="text-text-main dark:text-white text-sm font-bold">Sarah Jenkins</p>
+<p class="text-text-muted text-xs">sarah.j@example.com</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 h-full overflow-y-auto overflow-x-hidden flex flex-col relative">
+<header class="sticky top-0 z-20 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm px-8 py-6 border-b border-[#dbe6e0] dark:border-[#2a3c34]">
+<div class="max-w-[1200px] mx-auto w-full flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="text-text-main dark:text-white text-3xl font-black tracking-tight">Data Dashboard</h2>
+<p class="text-text-muted text-sm mt-1">Review your historical trends and performance metrics.</p>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-1 rounded-lg border border-[#dbe6e0] dark:border-[#2a3c34] flex items-center shadow-sm self-start md:self-auto">
+<label class="cursor-pointer">
+<input class="peer sr-only" name="time-period" type="radio"/>
+<span class="block px-4 py-1.5 rounded text-sm font-medium text-text-muted peer-checked:bg-primary peer-checked:text-[#102219] transition-all hover:bg-background-light dark:hover:bg-[#23352d]">7 Days</span>
+</label>
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" name="time-period" type="radio"/>
+<span class="block px-4 py-1.5 rounded text-sm font-medium text-text-muted peer-checked:bg-primary peer-checked:text-[#102219] transition-all hover:bg-background-light dark:hover:bg-[#23352d]">30 Days</span>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="time-period" type="radio"/>
+<span class="block px-4 py-1.5 rounded text-sm font-medium text-text-muted peer-checked:bg-primary peer-checked:text-[#102219] transition-all hover:bg-background-light dark:hover:bg-[#23352d]">90 Days</span>
+</label>
+</div>
+</div>
+</header>
+<div class="px-8 py-8 flex-1">
+<div class="max-w-[1200px] mx-auto w-full flex flex-col gap-8">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 border border-[#dbe6e0] dark:border-[#2a3c34] shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex justify-between items-start z-10">
+<div>
+<h3 class="text-text-muted text-sm font-bold uppercase tracking-wider">Weight Trend</h3>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="text-text-main dark:text-white text-4xl font-black">78.4</span>
+<span class="text-base font-medium text-text-muted">kg</span>
+</div>
+</div>
+<span class="px-2 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+                                2.1 kg
+                            </span>
+</div>
+<div class="h-32 w-full mt-6 -mx-2">
+<svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 50">
+<defs>
+<linearGradient id="weightFill" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#13ec80" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#13ec80" stop-opacity="0"></stop>
+</linearGradient>
+</defs>
+<path d="M0,10 C20,10 20,25 40,20 C60,15 60,35 80,30 C90,28 95,40 100,45 V50 H0 Z" fill="url(#weightFill)"></path>
+<path d="M0,10 C20,10 20,25 40,20 C60,15 60,35 80,30 C90,28 95,40 100,45" fill="none" stroke="#13ec80" stroke-linecap="round" stroke-width="1.5"></path>
+</svg>
+</div>
+<div class="flex justify-between text-xs text-text-muted mt-2">
+<span>Start</span>
+<span>Current</span>
+</div>
+</div>
+<div class="lg:col-span-2 bg-surface-light dark:bg-surface-dark rounded-xl p-6 border border-[#dbe6e0] dark:border-[#2a3c34] shadow-sm flex flex-col md:flex-row gap-8">
+<div class="flex-1 flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-text-muted text-sm font-bold uppercase tracking-wider">Green Score Trend</h3>
+<div class="flex items-center gap-2">
+<span class="text-2xl font-black text-text-main dark:text-white">85</span>
+<span class="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded">Avg</span>
+</div>
+</div>
+<div class="flex-1 min-h-[120px] relative">
+<svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 200 60">
+<line class="dark:stroke-[#2a3c34]" stroke="#dbe6e0" stroke-dasharray="2" stroke-width="0.5" x1="0" x2="200" y1="15" y2="15"></line>
+<line class="dark:stroke-[#2a3c34]" stroke="#dbe6e0" stroke-dasharray="2" stroke-width="0.5" x1="0" x2="200" y1="45" y2="45"></line>
+<path d="M0,45 C20,40 40,50 60,35 C80,20 100,25 120,15 C140,5 160,20 180,15 L200,10" fill="none" stroke="#13ec80" stroke-linecap="round" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<circle class="fill-surface-light dark:fill-surface-dark stroke-primary" cx="0" cy="45" fill="#13ec80" r="3" stroke-width="2"></circle>
+<circle class="fill-surface-light dark:fill-surface-dark stroke-primary" cx="60" cy="35" fill="#13ec80" r="3" stroke-width="2"></circle>
+<circle class="fill-surface-light dark:fill-surface-dark stroke-primary" cx="120" cy="15" fill="#13ec80" r="3" stroke-width="2"></circle>
+<circle class="fill-surface-light dark:fill-surface-dark stroke-primary" cx="200" cy="10" fill="#13ec80" r="3" stroke-width="2"></circle>
+</svg>
+</div>
+<div class="flex justify-between text-xs text-text-muted mt-2">
+<span>Week 1</span>
+<span>Week 2</span>
+<span>Week 3</span>
+<span>Week 4</span>
+</div>
+</div>
+<div class="hidden md:block w-px bg-[#dbe6e0] dark:bg-[#2a3c34]"></div>
+<div class="flex-1 flex flex-col justify-center gap-5">
+<h4 class="text-text-main dark:text-white text-sm font-bold">Score Components (Avg)</h4>
+<div>
+<div class="flex justify-between mb-1.5">
+<span class="text-xs font-medium text-text-muted">Structure</span>
+<span class="text-xs font-bold text-primary">High (92%)</span>
+</div>
+<div class="w-full bg-[#f0f4f2] dark:bg-[#23352d] rounded-full h-2">
+<div class="bg-primary h-2 rounded-full shadow-[0_0_10px_rgba(19,236,128,0.3)]" style="width: 92%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1.5">
+<span class="text-xs font-medium text-text-muted">Excess Control</span>
+<span class="text-xs font-bold text-[#eab308]">Medium (65%)</span>
+</div>
+<div class="w-full bg-[#f0f4f2] dark:bg-[#23352d] rounded-full h-2">
+<div class="bg-[#eab308] h-2 rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1.5">
+<span class="text-xs font-medium text-text-muted">Processing</span>
+<span class="text-xs font-bold text-primary">Good (80%)</span>
+</div>
+<div class="w-full bg-[#f0f4f2] dark:bg-[#23352d] rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 80%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-4 px-1">
+<span class="material-symbols-outlined text-text-muted">query_stats</span>
+<h3 class="text-text-main dark:text-white text-lg font-bold">Nutritional Intake History</h3>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-4 border border-[#dbe6e0] dark:border-[#2a3c34] shadow-sm hover:border-primary/50 transition-colors">
+<p class="text-[10px] text-text-muted font-bold uppercase tracking-wide">Calories</p>
+<div class="flex items-end gap-2 mt-2">
+<span class="text-xl font-bold text-text-main dark:text-white">2,150</span>
+<span class="text-[10px] text-[#ef4444] font-bold mb-1">▲ 2%</span>
+</div>
+<svg class="w-full h-10 mt-2 overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 30">
+<path class="stroke-text-main dark:stroke-white" d="M0,20 L10,15 L20,25 L30,10 L40,15 L50,12 L60,18 L70,15 L80,20 L90,10 L100,15" fill="none" stroke="#text-main" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-4 border border-[#dbe6e0] dark:border-[#2a3c34] shadow-sm hover:border-primary/50 transition-colors">
+<p class="text-[10px] text-text-muted font-bold uppercase tracking-wide">Protein</p>
+<div class="flex items-end gap-2 mt-2">
+<span class="text-xl font-bold text-text-main dark:text-white">140g</span>
+<span class="text-[10px] text-primary font-bold mb-1">▲ 5%</span>
+</div>
+<svg class="w-full h-10 mt-2 overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 30">
+<path d="M0,25 Q25,5 50,15 T100,10" fill="none" stroke="#13ec80" stroke-linecap="round" stroke-width="1.5"></path>
+</svg>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-4 border border-[#dbe6e0] dark:border-[#2a3c34] shadow-sm hover:border-primary/50 transition-colors">
+<p class="text-[10px] text-text-muted font-bold uppercase tracking-wide">Sugar</p>
+<div class="flex items-end gap-2 mt-2">
+<span class="text-xl font-bold text-text-main dark:text-white">45g</span>
+<span class="text-[10px] text-[#ef4444] font-bold mb-1">▼ 12%</span>
+</div>
+<svg class="w-full h-10 mt-2 overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 30">
+<path d="M0,10 Q25,25 50,15 T100,20" fill="none" stroke="#ef4444" stroke-linecap="round" stroke-width="1.5"></path>
+</svg>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-4 border border-[#dbe6e0] dark:border-[#2a3c34] shadow-sm hover:border-primary/50 transition-colors">
+<p class="text-[10px] text-text-muted font-bold uppercase tracking-wide">Sodium</p>
+<div class="flex items-end gap-2 mt-2">
+<span class="text-xl font-bold text-text-main dark:text-white">2.1g</span>
+<span class="text-[10px] text-text-muted font-bold mb-1">- 0%</span>
+</div>
+<svg class="w-full h-10 mt-2 overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 30">
+<path d="M0,15 L20,15 L40,12 L60,18 L80,15 L100,15" fill="none" stroke="#618975" stroke-linecap="round" stroke-width="1.5"></path>
+</svg>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-4 border border-[#dbe6e0] dark:border-[#2a3c34] shadow-sm hover:border-primary/50 transition-colors">
+<p class="text-[10px] text-text-muted font-bold uppercase tracking-wide">Fiber</p>
+<div class="flex items-end gap-2 mt-2">
+<span class="text-xl font-bold text-text-main dark:text-white">28g</span>
+<span class="text-[10px] text-primary font-bold mb-1">▲ 8%</span>
+</div>
+<svg class="w-full h-10 mt-2 overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 30">
+<path d="M0,28 Q30,20 60,10 T100,5" fill="none" stroke="#13ec80" stroke-linecap="round" stroke-width="1.5"></path>
+</svg>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 border border-[#dbe6e0] dark:border-[#2a3c34] shadow-sm">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-[#eab308]">warning</span>
+<h3 class="text-text-main dark:text-white text-lg font-bold">Top Trigger Foods</h3>
+</div>
+<div class="space-y-5">
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="bg-[#f0f4f2] dark:bg-[#23352d] rounded-lg p-2.5 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-base">icecream</span>
+</div>
+<div>
+<p class="text-sm font-bold text-text-main dark:text-white">Ice Cream</p>
+<p class="text-[10px] text-text-muted uppercase tracking-wide font-bold">Frequent Impact</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-sm font-bold text-[#ef4444] block">-15 pts</span>
+<div class="w-24 bg-[#dbe6e0] dark:bg-[#2a3c34] rounded-full h-1.5 mt-1 ml-auto">
+<div class="bg-[#ef4444] h-1.5 rounded-full" style="width: 85%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="bg-[#f0f4f2] dark:bg-[#23352d] rounded-lg p-2.5 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-base">local_pizza</span>
+</div>
+<div>
+<p class="text-sm font-bold text-text-main dark:text-white">Pizza</p>
+<p class="text-[10px] text-text-muted uppercase tracking-wide font-bold">Moderate Impact</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-sm font-bold text-[#eab308] block">-8 pts</span>
+<div class="w-24 bg-[#dbe6e0] dark:bg-[#2a3c34] rounded-full h-1.5 mt-1 ml-auto">
+<div class="bg-[#eab308] h-1.5 rounded-full" style="width: 50%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-4">
+<div class="bg-[#f0f4f2] dark:bg-[#23352d] rounded-lg p-2.5 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-base">sports_bar</span>
+</div>
+<div>
+<p class="text-sm font-bold text-text-main dark:text-white">Alcohol</p>
+<p class="text-[10px] text-text-muted uppercase tracking-wide font-bold">Low Impact</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-sm font-bold text-[#eab308] block">-5 pts</span>
+<div class="w-24 bg-[#dbe6e0] dark:bg-[#2a3c34] rounded-full h-1.5 mt-1 ml-auto">
+<div class="bg-[#eab308] h-1.5 rounded-full" style="width: 30%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 border border-[#dbe6e0] dark:border-[#2a3c34] shadow-sm flex flex-col">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<h3 class="text-text-main dark:text-white text-lg font-bold">Trigger Times</h3>
+</div>
+<div class="flex-1 flex flex-col justify-end">
+<p class="text-sm text-text-muted mb-6 leading-relaxed">Analysis of your past 30 days shows <strong class="text-text-main dark:text-white">40%</strong> of excess sugar consumption occurred during late evening hours.</p>
+<div class="flex items-end justify-between h-32 gap-3 mb-2 px-2">
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-primary/10 dark:bg-primary/5 rounded-t-sm h-[20%] group-hover:bg-primary/20 transition-colors relative"></div>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-primary/20 dark:bg-primary/10 rounded-t-sm h-[10%] group-hover:bg-primary/30 transition-colors"></div>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-primary/10 dark:bg-primary/5 rounded-t-sm h-[30%] group-hover:bg-primary/20 transition-colors"></div>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-primary/10 dark:bg-primary/5 rounded-t-sm h-[15%] group-hover:bg-primary/20 transition-colors"></div>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group relative">
+<div class="absolute -top-8 bg-surface-dark dark:bg-surface-light text-white dark:text-black text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">High Risk</div>
+<div class="w-full bg-primary/50 rounded-t-sm h-[60%] group-hover:bg-primary/60 transition-colors"></div>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group relative">
+<div class="absolute -top-8 bg-primary text-[#102219] font-bold text-[10px] px-2 py-1 rounded whitespace-nowrap shadow-sm z-10">8 PM</div>
+<div class="w-full bg-primary rounded-t-sm h-[90%] shadow-[0_0_15px_rgba(19,236,128,0.3)] relative"></div>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-primary/40 rounded-t-sm h-[50%] group-hover:bg-primary/50 transition-colors"></div>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-primary/10 dark:bg-primary/5 rounded-t-sm h-[20%] group-hover:bg-primary/20 transition-colors"></div>
+</div>
+</div>
+<div class="flex justify-between text-[10px] text-text-muted font-bold uppercase tracking-wider px-2 border-t border-[#dbe6e0] dark:border-[#2a3c34] pt-2">
+<span>12pm</span>
+<span>4pm</span>
+<span>8pm</span>
+<span>12am</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+</body></html>
