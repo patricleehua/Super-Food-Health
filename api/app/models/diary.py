@@ -11,7 +11,12 @@ class DailyLog(BaseModel):
     date = Column(String, index=True)  # YYYY-MM-DD
 
     # Relationships
-    meal_logs = relationship("MealLog", back_populates="daily_log")
+    meal_logs = relationship(
+        "MealLog",
+        back_populates="daily_log",
+        foreign_keys="[MealLog.daily_log_id]",
+        primaryjoin="DailyLog.id == MealLog.daily_log_id"
+    )
 
 
 class MealLog(BaseModel):
@@ -24,8 +29,18 @@ class MealLog(BaseModel):
     note = Column(Text, nullable=True)
 
     # Relationships
-    daily_log = relationship("DailyLog", back_populates="meal_logs")
-    food_intake_items = relationship("FoodIntakeItem", back_populates="meal_log")
+    daily_log = relationship(
+        "DailyLog",
+        back_populates="meal_logs",
+        foreign_keys="[MealLog.daily_log_id]",
+        primaryjoin="DailyLog.id == MealLog.daily_log_id"
+    )
+    food_intake_items = relationship(
+        "FoodIntakeItem",
+        back_populates="meal_log",
+        foreign_keys="[FoodIntakeItem.meal_log_id]",
+        primaryjoin="MealLog.id == FoodIntakeItem.meal_log_id"
+    )
 
 
 class FoodIntakeItem(BaseModel):
@@ -44,7 +59,12 @@ class FoodIntakeItem(BaseModel):
     source = Column(String)  # search/manual/photo
 
     # Relationships
-    meal_log = relationship("MealLog", back_populates="food_intake_items")
+    meal_log = relationship(
+        "MealLog",
+        back_populates="food_intake_items",
+        foreign_keys="[FoodIntakeItem.meal_log_id]",
+        primaryjoin="MealLog.id == FoodIntakeItem.meal_log_id"
+    )
 
 
 class ExerciseLog(BaseModel):

@@ -2,12 +2,12 @@
 Authentication Middleware
 Validates JWT tokens for protected endpoints with whitelist support
 """
-from fastapi import Request, HTTPException
+from fastapi import Request, HTTPException, Depends
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 from jose import jwt, JWTError
 import logging
-from typing import Optional
+from typing import Optional, Dict
 
 from app.core.config import settings
 from app.core.redis import get_redis
@@ -129,3 +129,21 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
                 return True
 
         return False
+
+
+# Dependency to get current user from request state
+async def get_current_user(request: Request) -> Dict[str, str]:
+    """
+    Dependency to extract current user from request state.
+    The middleware should have already validated the token and set user_id.
+    """
+    user_id = getattr(request.state, "user_id", None)
+    
+    if not user_id:
+        raise HTTPException(
+            status_code=401,
+            detail="Authentication required",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    return {"id": user_id}
