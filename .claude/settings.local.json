@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(source:*)",
+      "Bash(pip install:*)",
+      "Bash(python -c:*)",
+      "Bash(export PATH:*)",
+      "Bash(uv init:*)"
+    ]
+  }
+}

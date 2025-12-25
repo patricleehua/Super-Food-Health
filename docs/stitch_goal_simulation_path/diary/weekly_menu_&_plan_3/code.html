@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daily Calorie Comparison - NutriTrack</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec80",
+                        "primary-dark": "#0fb662",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102219",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2c24",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111814] dark:text-gray-100 font-display min-h-screen flex flex-col overflow-x-hidden">
+<header class="sticky top-0 z-50 bg-surface-light dark:bg-surface-dark border-b border-[#f0f4f2] dark:border-gray-800 px-6 py-3 shadow-sm">
+<div class="max-w-[1600px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold tracking-tight">NutriTrack</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-bold text-primary" href="#">Menu &amp; Plan</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Analysis</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Settings</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden sm:flex items-center justify-center rounded-lg h-9 px-4 bg-primary text-surface-dark text-sm font-bold shadow-md hover:bg-primary-dark hover:text-white transition-all transform hover:-translate-y-0.5">
+                Go Premium
+            </button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 border-2 border-primary/20 cursor-pointer" data-alt="User profile picture of a smiling person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCJznwTajMV4Md97I9nB9S2WZ1_2IFCKLQl8PrFYPJAPwfeY3yFUxUU8AnBNOniL9T0u35UtOaDvQZksnH3ZGBC-rnCWTEMK08w5CllMr4Kj1HUeAwF0z20G8xp2E6V2kexf2My34Mmsty_OIYSrPihz8-GHNN-NvL6TD7pCHmUJEhlPS9kyRhLh7fyd9nzbNlbWTeSZkk79BvXAQSjqSn2-FBxIY_B0CcM2PHAhr2PI3AlxQfRX_SXVR2be3czKVYv7ZTPwdNF-Q");'></div>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-[1600px] w-full mx-auto p-6 lg:p-8">
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+<div class="flex flex-col gap-1">
+<h1 class="text-3xl lg:text-4xl font-black tracking-tight text-[#111814] dark:text-white">Daily Food Diary</h1>
+<p class="text-[#618975] dark:text-gray-400 font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">calendar_month</span>
+                Tuesday, Oct 25
+            </p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 rounded-lg h-10 px-4 bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 text-sm font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-lg">history</span>
+                History
+            </button>
+<button class="flex items-center gap-2 rounded-lg h-10 px-4 bg-[#111814] text-white dark:bg-primary dark:text-[#111814] text-sm font-bold shadow-lg hover:shadow-xl transition-all">
+<span class="material-symbols-outlined text-lg">auto_awesome</span>
+                Smart Plan
+            </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 h-[calc(100vh-220px)] min-h-[600px]">
+<aside class="col-span-1 lg:col-span-3 xl:col-span-2 flex flex-col gap-4 bg-gradient-to-b from-[#eafaf1] to-[#ffffff] dark:bg-none dark:bg-surface-dark rounded-xl border border-[#cbece0] dark:border-gray-800 shadow-sm overflow-hidden h-full">
+<div class="p-4 border-b border-[#cbece0] dark:border-gray-800 bg-white/40 dark:bg-black/20 backdrop-blur-md sticky top-0 z-10">
+<h3 class="text-lg font-bold mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">drag_indicator</span>
+                    Quick Templates
+                </h3>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">search</span>
+<input class="w-full h-10 pl-10 pr-4 bg-white dark:bg-black/40 rounded-lg text-sm border border-transparent focus:border-primary/20 focus:ring-2 focus:ring-primary/50 placeholder-gray-400 transition-colors" placeholder="Search meals..." type="text"/>
+</div>
+<div class="flex gap-2 mt-3 overflow-x-auto hide-scrollbar pb-1">
+<span class="shrink-0 px-2 py-1 rounded-md bg-primary/10 text-primary-dark dark:text-primary text-xs font-bold cursor-pointer hover:bg-primary/20 transition-colors">All</span>
+<span class="shrink-0 px-2 py-1 rounded-md bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-green-100 dark:border-gray-700 text-xs font-bold cursor-pointer hover:bg-green-50 dark:hover:bg-gray-700 transition-colors">High Protein</span>
+<span class="shrink-0 px-2 py-1 rounded-md bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-green-100 dark:border-gray-700 text-xs font-bold cursor-pointer hover:bg-green-50 dark:hover:bg-gray-700 transition-colors">Vegan</span>
+<span class="shrink-0 px-2 py-1 rounded-md bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-green-100 dark:border-gray-700 text-xs font-bold cursor-pointer hover:bg-green-50 dark:hover:bg-gray-700 transition-colors">Keto</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-3 space-y-3">
+<div class="group flex items-start gap-3 p-3 bg-white dark:bg-black/20 rounded-lg border border-transparent hover:border-primary/30 hover:shadow-md cursor-grab active:cursor-grabbing transition-all">
+<div class="bg-center bg-no-repeat bg-cover rounded-md size-16 shrink-0" data-alt="Close up of a fresh Mediterranean salad bowl" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyFw6KeItHYJokq8pgjTuiIPpkKyr-g8UZveYVaWX8aNvuzjATYiIJtdAkWLRqJnqSWDCGwQBLIR4ujpjC-L6zxObQqMRXypvG3-7Be2wHlB1lEjt9TLYTPgGNl4c4FEPbMS--PZWfupCzwldPGrS8HSFPl6ReUs2LeSEuqkhbNcPIdtMt1S9ltarKLuMxd26cawY4XGbwih1T0a6V9fMItX66FonGENrmi4ELlInWgqJ_rKMAdqngI3b9hvGX38uLKbHgUmmPnw");'></div>
+<div class="flex flex-col min-w-0">
+<p class="text-sm font-bold truncate group-hover:text-primary transition-colors">Mediterranean Start</p>
+<p class="text-xs text-gray-500 mt-1">350 kcal • High Fiber</p>
+<div class="mt-2 flex gap-1">
+<span class="size-2 rounded-full bg-green-400"></span>
+<span class="size-2 rounded-full bg-yellow-400"></span>
+</div>
+</div>
+</div>
+<div class="group flex items-start gap-3 p-3 bg-white dark:bg-black/20 rounded-lg border border-transparent hover:border-primary/30 hover:shadow-md cursor-grab active:cursor-grabbing transition-all">
+<div class="bg-center bg-no-repeat bg-cover rounded-md size-16 shrink-0" data-alt="Grilled chicken breast with vegetables" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCiK_x4aBvykLDzLwktJjzeEPqcswPmkMwPli0YEOgbh87LKJhFax8cCoInrXZLvje3yzPQgFBroiRKCx9reVXGTE4LwR5ISr_oVSuGwegvQZWd0W3ZHp7NBaGOzi6qI6El6jzI9gniLwwTq8dnMhPuSrZy_Z20t639V8OJVe0dLRoVsyKamMo0hphsLVzOBFpkEY8CvkYg-auEyaEVWpCPwevM8ngoDRSJ7_qKm7zwJUrc7-DEvDOSiq3Ild4cdFW-cr3DRiuyfQ");'></div>
+<div class="flex flex-col min-w-0">
+<p class="text-sm font-bold truncate group-hover:text-primary transition-colors">Post-Workout Power</p>
+<p class="text-xs text-gray-500 mt-1">500 kcal • High Protein</p>
+</div>
+</div>
+<div class="relative group flex items-start gap-3 p-3 bg-white dark:bg-black/20 rounded-lg border border-transparent hover:border-primary/30 hover:shadow-md cursor-pointer transition-all opacity-75">
+<div class="bg-center bg-no-repeat bg-cover rounded-md size-16 shrink-0 grayscale group-hover:grayscale-0 transition-all" data-alt="Sushi platter with salmon and avocado" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC0MxFFNwREiWxo2kIQ0vGpRmcGCg-mtZZpdIuBAc_r1eTd35-SMWaskGeJ5OOGLqelNOTpqkFtNwEf5vwVIt_7ZOmVGEcnJApt9EppAZI9eKg5nCxrKR0cav7yqTkFwJsLpBEmKOwyHxZ85ArCllKe-K-1VMe33VtNYpM76X9r_0cUmZR5eVFL3ut6130jUjMh6WzG2MjYHibCnnbel7rCi3n1xwMs2AV4wf6J3q9ksGTB57H2Wu8sNLsodYcC5X0eEEJPvlLHZQ");'></div>
+<div class="flex flex-col min-w-0">
+<p class="text-sm font-bold truncate">Omega Boost Sushi</p>
+<p class="text-xs text-gray-500 mt-1">450 kcal • Healthy Fats</p>
+</div>
+<div class="absolute inset-0 bg-white/40 dark:bg-black/40 flex items-center justify-center rounded-lg backdrop-blur-[1px] group-hover:backdrop-blur-none group-hover:bg-transparent transition-all">
+<div class="size-8 rounded-full bg-surface-dark text-primary flex items-center justify-center shadow-lg group-hover:opacity-0 transition-opacity">
+<span class="material-symbols-outlined text-sm">lock</span>
+</div>
+</div>
+</div>
+<div class="group flex items-start gap-3 p-3 bg-white dark:bg-black/20 rounded-lg border border-transparent hover:border-primary/30 hover:shadow-md cursor-grab active:cursor-grabbing transition-all">
+<div class="bg-center bg-no-repeat bg-cover rounded-md size-16 shrink-0" data-alt="Bowl of oatmeal with berries" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCxsfR7Q8YPLczaJxg4ktNfNKKhW3cSg-7iJBvT10fewIqg741s1xi3Q3zOcsjLaH6qpCcTwkgLKcOnf2iagQDmhg1YIgk3PYx7STRyyxXWsMAKTDKgaTzYfW0ll361m3fe5Cqh_1RA0hQ_bejZ55BM9WOXr6Tx7z71pBykjY6JyuOzO_Voh0vYZm_tMroUmrjmR45P0MHI2K3BzgmY3WIxNiqcoVbUj-IrnKFLjTB0L0LTrCuZohi0LNckKAnjYFSk-wWsuXbjCA");'></div>
+<div class="flex flex-col min-w-0">
+<p class="text-sm font-bold truncate group-hover:text-primary transition-colors">Berry Oatmeal</p>
+<p class="text-xs text-gray-500 mt-1">280 kcal • Low Sugar</p>
+</div>
+</div>
+</div>
+</aside>
+<section class="col-span-1 lg:col-span-9 xl:col-span-8 bg-surface-light dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col h-full overflow-hidden relative">
+<div class="grid grid-cols-8 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-surface-dark sticky top-0 z-20">
+<div class="col-span-1 p-4 flex items-center justify-center border-r border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-black/20">
+<span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Meal</span>
+</div>
+<div class="col-span-7 grid grid-cols-7 divide-x divide-gray-100 dark:divide-gray-800">
+<div class="text-center py-3 px-1">
+<p class="text-xs font-bold text-gray-400 uppercase">Mon</p>
+<p class="text-lg font-bold text-gray-900 dark:text-white">24</p>
+</div>
+<div class="text-center py-3 px-1 bg-primary/10 dark:bg-primary/5 relative">
+<div class="absolute top-0 inset-x-0 h-1 bg-primary"></div>
+<p class="text-xs font-bold text-primary uppercase">Tue</p>
+<p class="text-lg font-bold text-primary">25</p>
+</div>
+<div class="text-center py-3 px-1">
+<p class="text-xs font-bold text-gray-400 uppercase">Wed</p>
+<p class="text-lg font-bold text-gray-900 dark:text-white">26</p>
+</div>
+<div class="text-center py-3 px-1">
+<p class="text-xs font-bold text-gray-400 uppercase">Thu</p>
+<p class="text-lg font-bold text-gray-900 dark:text-white">27</p>
+</div>
+<div class="text-center py-3 px-1">
+<p class="text-xs font-bold text-gray-400 uppercase">Fri</p>
+<p class="text-lg font-bold text-gray-900 dark:text-white">28</p>
+</div>
+<div class="text-center py-3 px-1 bg-gray-50/50 dark:bg-white/5">
+<p class="text-xs font-bold text-gray-400 uppercase">Sat</p>
+<p class="text-lg font-bold text-gray-900 dark:text-white">29</p>
+</div>
+<div class="text-center py-3 px-1 bg-gray-50/50 dark:bg-white/5">
+<p class="text-xs font-bold text-gray-400 uppercase">Sun</p>
+<p class="text-lg font-bold text-gray-900 dark:text-white">30</p>
+</div>
+</div>
+</div>
+<div class="overflow-y-auto flex-1 bg-white dark:bg-surface-dark">
+<div class="grid grid-cols-8 divide-y divide-gray-100 dark:divide-gray-800 min-h-full">
+<div class="col-span-1 p-4 border-r border-gray-100 dark:border-gray-800 flex flex-col justify-center items-center bg-gray-50/30 dark:bg-black/10">
+<div class="size-8 rounded-full bg-orange-100 text-orange-600 dark:bg-orange-900 dark:text-orange-300 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-lg">light_mode</span>
+</div>
+<span class="text-xs font-bold text-gray-500">Breakfast</span>
+</div>
+<div class="col-span-7 grid grid-cols-7 divide-x divide-gray-100 dark:divide-gray-800 bg-white dark:bg-surface-dark">
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group relative">
+<div class="h-full rounded bg-background-light dark:bg-gray-800 p-2 border border-transparent group-hover:border-primary/20 flex flex-col gap-2 cursor-pointer">
+<div class="h-20 w-full rounded bg-cover bg-center" data-alt="Avocado toast on a plate" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAzjZ8HhgjSE3-IP9SLp2ohwTGwhMAGsdRO9W0gR2PFzCR3UCC-hphvSnH6YSLI0Tc2g-4GWNqNAy2d6J37XenMEGokVZIX0Urh_MYbj3Z2RDbBiw9aF_GCpRWMk0tXYgg7smQL5s24-ROawyAK9L_-eaw8LTkLllD8oY5W4Lcq7c_7r0DYkOhGDJan5R430_fK4cQsUfbt-OypHBH6QnBU-gLiZXYhlEAVC8EZ2q-f8eFmfesTjnZsZfAGYFvz280eh-W8gGF5pg");'></div>
+<p class="text-xs font-bold leading-tight line-clamp-2">Avocado Toast</p>
+<span class="text-[10px] bg-white dark:bg-black/40 px-1.5 py-0.5 rounded self-start border border-gray-100 dark:border-gray-700">320 kcal</span>
+</div>
+</div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group">
+<div class="h-full border-2 border-dashed border-gray-200 dark:border-gray-700 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-primary group-hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group relative">
+<div class="h-full rounded bg-background-light dark:bg-gray-800 p-2 border border-transparent group-hover:border-primary/20 flex flex-col gap-2 cursor-pointer">
+<div class="h-20 w-full rounded bg-cover bg-center" data-alt="Greek yogurt with nuts" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDIlQKNCZMpp5od5du6GTFbOJo60tDFqCxWUVHb4yqWM0kH2mld7WyXSPkxQnPYRqlNcQLM8u1f-gam7LK6W1Axn-l24oLwhKfoffWlrsmB2iCyr2EgZBP2VArwwd7Ya3mZoB54ZHgG2babpaSP5J65WyERw8__zLdQLiV6pmRGxOBVywdDDxdQwcfpzffsxhNFU8MVh3OFXvqNFhQuKTuvn6jSy94TSkthhdHz-yIlHOEdPZ9ICe4EpGvgdmaruc0hs8RbMh65Wg");'></div>
+<p class="text-xs font-bold leading-tight line-clamp-2">Greek Yogurt Bowl</p>
+<span class="text-[10px] bg-white dark:bg-black/40 px-1.5 py-0.5 rounded self-start border border-gray-100 dark:border-gray-700">250 kcal</span>
+</div>
+</div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group">
+<div class="h-full border-2 border-dashed border-gray-200 dark:border-gray-700 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-primary group-hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group relative">
+<div class="h-full rounded bg-background-light dark:bg-gray-800 p-2 border border-transparent group-hover:border-primary/20 flex flex-col gap-2 cursor-pointer">
+<div class="h-20 w-full rounded bg-cover bg-center" data-alt="Scrambled eggs with toast" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBLqiV3hnizv1W_XffTjH5uxolTSfdsoGA5iCcXbFUwzN_BvB_ocQeRaEL5xPfqpXSRzmf9Ppj9koHtsIticf33rLuOvyf9WpNuigXedxqzetyJOEUIpuq7lHCTUqr48wAtoCLLuoGCtbhV83ISyN3JIAG_WRdkye_ZgTk8tlpWnkj0WzvhKbs0hdt8ycTWj9jhFqWocwDbYgnFQbJDQBcs64fbn5mnrBqzKkNaKgrMfrf09q44Sj5kXa1_SEcH33ypaKmglCDFGQ");'></div>
+<p class="text-xs font-bold leading-tight line-clamp-2">Scrambled Eggs</p>
+<span class="text-[10px] bg-white dark:bg-black/40 px-1.5 py-0.5 rounded self-start border border-gray-100 dark:border-gray-700">400 kcal</span>
+</div>
+</div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group">
+<div class="h-full border-2 border-dashed border-gray-200 dark:border-gray-700 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-primary group-hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group">
+<div class="h-full border-2 border-dashed border-gray-200 dark:border-gray-700 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-primary group-hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+</div>
+<div class="col-span-1 p-4 border-r border-gray-100 dark:border-gray-800 flex flex-col justify-center items-center bg-gray-50/30 dark:bg-black/10">
+<div class="size-8 rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-lg">wb_twilight</span>
+</div>
+<span class="text-xs font-bold text-gray-500">Lunch</span>
+</div>
+<div class="col-span-7 grid grid-cols-7 divide-x divide-gray-100 dark:divide-gray-800 bg-white dark:bg-surface-dark">
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group relative">
+<div class="h-full rounded bg-background-light dark:bg-gray-800 p-2 border border-transparent group-hover:border-primary/20 flex flex-col gap-2 cursor-pointer">
+<div class="h-20 w-full rounded bg-cover bg-center" data-alt="Chicken caesar salad bowl" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCEBMxXZwNea656eU4VXLRrgTy4IvHA-I-mKet7v_n1iul7e5VM3S-LOzA3872slUCOTPnJNHZ_mv_qEMlKRmIsXx7YWnXmF0zCkpJeNSFLjSRqTHpiMX_S7JysgfRpsftl7Z9VJOXMXKS9WuSrkX03-4_KP5yuLQDWviCffF8jk8uzEkQwqi29ISLPzwb3Tea363ZO7eLKOz6e4Emc8z2d-p-AnkwNEstERGvSw-xN01kkP0jDywv9xSDQyUAdLPNGvMrNFIhncg");'></div>
+<p class="text-xs font-bold leading-tight line-clamp-2">Chicken Caesar</p>
+<span class="text-[10px] bg-white dark:bg-black/40 px-1.5 py-0.5 rounded self-start border border-gray-100 dark:border-gray-700">450 kcal</span>
+</div>
+</div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group relative">
+<div class="h-full rounded bg-background-light dark:bg-gray-800 p-2 border border-transparent group-hover:border-primary/20 flex flex-col gap-2 cursor-pointer">
+<div class="h-20 w-full rounded bg-cover bg-center" data-alt="Quinoa salad with chickpeas" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCht9VhFbbir4bCo2MK7mFQYtbphLObg-PCoI7s4F9HRCV7eTtwkrpwDeTJ7lo0qSUzTAyaNyqm4mL3GBOPaxjjsaHQsa_SmRmudS2zjUh_rSjZ6LHO7Vx88VveUxVvZMlZYDKp-Opyazl_7-Dm4YBPSZLq0LUSt_1bQuVkMenzbh8cJMMtuoxnTE4gxPyRVyo3To0_pOtmxxHGZlj6fMzaosUG4zz8Wdnkoa0WlanahdOIfYsahqY09uBbTuCfN2GpaQyVMMNHTw");'></div>
+<p class="text-xs font-bold leading-tight line-clamp-2">Quinoa Salad</p>
+<span class="text-[10px] bg-white dark:bg-black/40 px-1.5 py-0.5 rounded self-start border border-gray-100 dark:border-gray-700">380 kcal</span>
+</div>
+</div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group">
+<div class="h-full border-2 border-dashed border-gray-200 dark:border-gray-700 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-primary group-hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group relative">
+<div class="h-full rounded bg-background-light dark:bg-gray-800 p-2 border border-transparent group-hover:border-primary/20 flex flex-col gap-2 cursor-pointer">
+<div class="h-20 w-full rounded bg-cover bg-center" data-alt="Wrap with turkey and veggies" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDCsp86DzJpOXiUO3HT-Fj4ojuK_yuipIEpIWgzylxAIGKeALukABQcN5Bw0-4F1178yGxSXfRufHCSg6IG6eyF7QEq5cn1As4NJ9rBWW_ddG9XMIN7mWRQV4cA7BxRLoGrQi4PTQjnK1x7Gc3d2tPXSjnZT2EmDARvgajrWQztSy3NSE7jvjHpO_LtLb7Ag8q_cJn7SfS3qO8de6zjYgzB2HJ2LvZog611LAjgmjncXhhaANRpMXjmnRimO6uqy0YWWlccFCzKTw");'></div>
+<p class="text-xs font-bold leading-tight line-clamp-2">Turkey Wrap</p>
+<span class="text-[10px] bg-white dark:bg-black/40 px-1.5 py-0.5 rounded self-start border border-gray-100 dark:border-gray-700">420 kcal</span>
+</div>
+</div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group"><div class="h-full border-2 border-dashed border-gray-200 dark:border-gray-700 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-primary cursor-pointer"><span class="material-symbols-outlined">add</span></div></div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group"><div class="h-full border-2 border-dashed border-gray-200 dark:border-gray-700 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-primary cursor-pointer"><span class="material-symbols-outlined">add</span></div></div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group"><div class="h-full border-2 border-dashed border-gray-200 dark:border-gray-700 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-primary cursor-pointer"><span class="material-symbols-outlined">add</span></div></div>
+</div>
+<div class="col-span-1 p-4 border-r border-gray-100 dark:border-gray-800 flex flex-col justify-center items-center bg-gray-50/30 dark:bg-black/10">
+<div class="size-8 rounded-full bg-indigo-100 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-300 flex items-center justify-center mb-1">
+<span class="material-symbols-outlined text-lg">dark_mode</span>
+</div>
+<span class="text-xs font-bold text-gray-500">Dinner</span>
+</div>
+<div class="col-span-7 grid grid-cols-7 divide-x divide-gray-100 dark:divide-gray-800 bg-white dark:bg-surface-dark">
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group relative">
+<div class="h-full rounded bg-background-light dark:bg-gray-800 p-2 border border-transparent group-hover:border-primary/20 flex flex-col gap-2 cursor-pointer">
+<div class="h-20 w-full rounded bg-cover bg-center" data-alt="Grilled salmon fillet with asparagus" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC2Gu6ux5gDo5iX1SBj9n-MsMzKQ3SWBmYdh8pRJxAQyGVRMpkJ7uvPcv4K-9ml6iR-Pcu2VIur9V7ObfRABfthBrtQY6t2j-ofEvXUd47a_6LJImrdComnVIKcn7lk1mXXVJg5lBtcQ8r0e0YOzK_SQDuQ-sx8YbveZAtJKdv3J3rcAlSg_RedevUtLQDP_0UxYCI66DLEx_VtdPkCOfTowDrqcjrkw7BKuR_6CJDI1SVZxVh_sJTP4_lYhMwi-kBKyoBwBiqyxQ");'></div>
+<p class="text-xs font-bold leading-tight line-clamp-2">Grilled Salmon</p>
+<span class="text-[10px] bg-white dark:bg-black/40 px-1.5 py-0.5 rounded self-start border border-gray-100 dark:border-gray-700">550 kcal</span>
+</div>
+</div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group">
+<div class="h-full border-2 border-dashed border-gray-200 dark:border-gray-700 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-primary group-hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group">
+<div class="h-full border-2 border-dashed border-gray-200 dark:border-gray-700 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-primary group-hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group relative">
+<div class="h-full rounded bg-background-light dark:bg-gray-800 p-2 border border-transparent group-hover:border-primary/20 flex flex-col gap-2 cursor-pointer">
+<div class="h-20 w-full rounded bg-cover bg-center" data-alt="Stir fry vegetables in a wok" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDJJTqOoYBBa4Y3B4w8H0ulHpvD1dTIlDyQkpFgPWAXJUCXDuseoQ93CN9xlMn4QfQsdjBVVBU2c6xsuFBKj0S4zWbjIrfa3ge0RsFJlToUYNledBR1TQk22B67gqGHqoIX33lLXhM3RKFkApj2A10YHMvdrCoMzWkxa6MSNoTT0Gyz_ChiGNplGVuPofueJjmRNYSsBtTSUfR-FsOdyGU2zP2ZLnDwn5kx_1MQLwGnZYeuxJugtCkm5V_P4UaIK4Gx2idih3adww");'></div>
+<p class="text-xs font-bold leading-tight line-clamp-2">Veggie Stir Fry</p>
+<span class="text-[10px] bg-white dark:bg-black/40 px-1.5 py-0.5 rounded self-start border border-gray-100 dark:border-gray-700">410 kcal</span>
+</div>
+</div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group"><div class="h-full border-2 border-dashed border-gray-200 dark:border-gray-700 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-primary cursor-pointer"><span class="material-symbols-outlined">add</span></div></div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group"><div class="h-full border-2 border-dashed border-gray-200 dark:border-gray-700 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-primary cursor-pointer"><span class="material-symbols-outlined">add</span></div></div>
+<div class="p-2 min-h-[140px] hover:bg-gray-50 dark:hover:bg-white/5 transition-colors group"><div class="h-full border-2 border-dashed border-gray-200 dark:border-gray-700 rounded flex flex-col items-center justify-center text-gray-400 group-hover:border-primary cursor-pointer"><span class="material-symbols-outlined">add</span></div></div>
+</div>
+</div>
+</div>
+<button class="absolute bottom-6 right-6 size-12 bg-primary text-surface-dark rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform xl:hidden">
+<span class="material-symbols-outlined">add</span>
+</button>
+</section>
+<aside class="col-span-1 lg:col-span-12 xl:col-span-2 flex flex-col gap-6 h-full">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm p-5">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold">Daily Summary</h3>
+<div class="size-8 rounded-full bg-green-50 dark:bg-green-900/30 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">query_stats</span>
+</div>
+</div>
+<div class="bg-gray-50 dark:bg-black/20 rounded-lg p-4 border border-gray-100 dark:border-gray-700/50 mb-5">
+<div class="flex justify-between items-center mb-3">
+<span class="text-xs font-bold text-gray-500 uppercase tracking-wide">Calories</span>
+<span class="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">72% of Goal</span>
+</div>
+<div class="space-y-3">
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="font-bold text-gray-700 dark:text-gray-300">Intake</span>
+<span class="font-bold text-gray-900 dark:text-white">1,450 kcal</span>
+</div>
+<div class="h-2.5 w-full bg-white dark:bg-gray-700 rounded-full overflow-hidden border border-gray-100 dark:border-transparent">
+<div class="h-full bg-primary rounded-full shadow-[0_0_10px_rgba(19,236,128,0.4)]" style="width: 72%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="font-bold text-gray-400">Target</span>
+<span class="font-bold text-gray-500">2,000 kcal</span>
+</div>
+<div class="h-2.5 w-full bg-white dark:bg-gray-700 rounded-full overflow-hidden border border-gray-100 dark:border-transparent">
+<div class="h-full bg-gray-200 dark:bg-gray-600 rounded-full w-full"></div>
+</div>
+</div>
+</div>
+<div class="mt-3 pt-3 border-t border-gray-200/50 dark:border-gray-700/50 flex justify-between items-center text-xs">
+<span class="text-gray-500 font-medium">Remaining</span>
+<span class="font-bold text-gray-800 dark:text-white">550 kcal</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<div class="bg-white dark:bg-black/20 rounded-lg p-2.5 border border-gray-100 dark:border-gray-800 flex flex-col items-center hover:border-primary/30 transition-colors">
+<div class="relative size-10 mb-2">
+<svg class="size-full -rotate-90" viewBox="0 0 36 36">
+<path class="text-gray-100 dark:text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-emerald-400" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="80, 100" stroke-width="3"></path>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center text-[9px] font-black text-gray-700 dark:text-gray-300">80%</div>
+</div>
+<p class="text-[10px] font-bold text-gray-700 dark:text-gray-300 uppercase tracking-tight">Protein</p>
+<p class="text-[9px] text-gray-400 font-medium">120g</p>
+</div>
+<div class="bg-white dark:bg-black/20 rounded-lg p-2.5 border border-gray-100 dark:border-gray-800 flex flex-col items-center hover:border-yellow-400/30 transition-colors">
+<div class="relative size-10 mb-2">
+<svg class="size-full -rotate-90" viewBox="0 0 36 36">
+<path class="text-gray-100 dark:text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-yellow-400" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="65, 100" stroke-width="3"></path>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center text-[9px] font-black text-gray-700 dark:text-gray-300">65%</div>
+</div>
+<p class="text-[10px] font-bold text-gray-700 dark:text-gray-300 uppercase tracking-tight">Carbs</p>
+<p class="text-[9px] text-gray-400 font-medium">145g</p>
+</div>
+<div class="bg-white dark:bg-black/20 rounded-lg p-2.5 border border-gray-100 dark:border-gray-800 flex flex-col items-center hover:border-orange-400/30 transition-colors">
+<div class="relative size-10 mb-2">
+<svg class="size-full -rotate-90" viewBox="0 0 36 36">
+<path class="text-gray-100 dark:text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-orange-400" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="45, 100" stroke-width="3"></path>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center text-[9px] font-black text-gray-700 dark:text-gray-300">45%</div>
+</div>
+<p class="text-[10px] font-bold text-gray-700 dark:text-gray-300 uppercase tracking-tight">Fat</p>
+<p class="text-[9px] text-gray-400 font-medium">30g</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm p-5 flex flex-col gap-4 flex-1 overflow-hidden">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold">Shopping List</h3>
+<button class="text-xs font-bold text-primary hover:underline">Clear</button>
+</div>
+<div class="space-y-1 overflow-y-auto flex-1 pr-2">
+<div class="flex items-start gap-3 py-2 border-b border-gray-50 dark:border-gray-800 opacity-50">
+<div class="relative flex items-center">
+<input checked="" class="peer size-4 appearance-none rounded border border-gray-300 bg-white checked:bg-primary checked:border-transparent focus:ring-1 focus:ring-primary cursor-pointer" type="checkbox"/>
+<span class="material-symbols-outlined text-white text-[10px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">check</span>
+</div>
+<span class="text-sm line-through">Almond Milk</span>
+</div>
+<div class="flex items-start gap-3 py-2 border-b border-gray-50 dark:border-gray-800">
+<div class="relative flex items-center">
+<input class="peer size-4 appearance-none rounded border border-gray-300 bg-white checked:bg-primary checked:border-transparent focus:ring-1 focus:ring-primary cursor-pointer" type="checkbox"/>
+<span class="material-symbols-outlined text-white text-[10px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden peer-checked:block">check</span>
+</div>
+<span class="text-sm font-medium">Salmon Fillet (2x)</span>
+</div>
+<div class="flex items-start gap-3 py-2 border-b border-gray-50 dark:border-gray-800">
+<div class="relative flex items-center">
+<input class="peer size-4 appearance-none rounded border border-gray-300 bg-white checked:bg-primary checked:border-transparent focus:ring-1 focus:ring-primary cursor-pointer" type="checkbox"/>
+<span class="material-symbols-outlined text-white text-[10px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden peer-checked:block">check</span>
+</div>
+<span class="text-sm font-medium">Avocados (3)</span>
+</div>
+<div class="flex items-start gap-3 py-2 border-b border-gray-50 dark:border-gray-800">
+<div class="relative flex items-center">
+<input class="peer size-4 appearance-none rounded border border-gray-300 bg-white checked:bg-primary checked:border-transparent focus:ring-1 focus:ring-primary cursor-pointer" type="checkbox"/>
+<span class="material-symbols-outlined text-white text-[10px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden peer-checked:block">check</span>
+</div>
+<span class="text-sm font-medium">Greek Yogurt</span>
+</div>
+<div class="flex items-start gap-3 py-2 border-b border-gray-50 dark:border-gray-800">
+<div class="relative flex items-center">
+<input class="peer size-4 appearance-none rounded border border-gray-300 bg-white checked:bg-primary checked:border-transparent focus:ring-1 focus:ring-primary cursor-pointer" type="checkbox"/>
+<span class="material-symbols-outlined text-white text-[10px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden peer-checked:block">check</span>
+</div>
+<span class="text-sm font-medium">Baby Spinach</span>
+</div>
+</div>
+<button class="w-full flex items-center justify-center gap-2 rounded-lg h-10 bg-primary text-surface-dark text-sm font-bold hover:bg-primary-dark hover:text-white transition-colors mt-auto">
+<span class="material-symbols-outlined text-lg">download</span>
+                    Export PDF
+                </button>
+</div>
+</aside>
+</div>
+</main>
+
+</body></html>
