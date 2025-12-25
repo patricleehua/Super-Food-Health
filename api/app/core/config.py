@@ -31,7 +31,21 @@ class Settings(BaseSettings):
     # JWT
     SECRET_KEY: str = "your-secret-key-here-change-in-production"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8  # 8 days
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 30  # 30 days
     ALGORITHM: str = "HS256"
+    
+    # API Whitelist (public endpoints that don't require authentication)
+    PUBLIC_ENDPOINTS: list[str] = [
+        "/",
+        "/health",
+        "/docs",
+        "/redoc",
+        "/openapi.json",
+        "/api/v1/auth/login",
+        "/api/v1/auth/register",
+        "/api/v1/auth/wx/login",
+        "/api/v1/auth/refresh",
+    ]
 
     # JWT for miniapp
     MINIAPP_SECRET_KEY: Optional[str] = None

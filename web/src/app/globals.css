@@ -4,7 +4,7 @@
   :root {
     --background: #f6f8f7;
     --foreground: #111814;
-    --primary: #13ec80;
+    --primary: #39e079;
     --text-muted: #618975;
   }
 
@@ -17,9 +17,9 @@
 }
 
 @theme inline {
-  --color-primary: #13ec80;
+  --color-primary: #39e079;
   --color-background-light: #f6f8f7;
-  --color-background-dark: #102219;
+  --color-background-dark: #122017;
   --color-text-main: #111814;
   --color-text-muted: #618975;
 }

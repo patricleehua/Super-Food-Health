@@ -3,8 +3,12 @@ Redis 连接配置
 支持有密码的 Redis 连接
 """
 import os
+import logging
 from typing import Optional
 from redis.asyncio import Redis, ConnectionPool
+from redis.exceptions import ConnectionError, RedisError
+
+logger = logging.getLogger(__name__)
 
 
 class RedisManager:
@@ -59,6 +63,16 @@ class RedisManager:
             await self.init_redis()
         return self._redis
 
+    async def ping(self) -> bool:
+        """检查 Redis 连接是否可用"""
+        try:
+            redis = await self.get_redis()
+            await redis.ping()
+            return True
+        except (ConnectionError, RedisError) as e:
+            logger.warning(f"Redis connection failed: {e}")
+            return False
+
     async def close(self):
         """关闭 Redis 连接"""
         if self._redis:
@@ -72,9 +86,16 @@ redis_manager = RedisManager()
 
 
 # 依赖注入 FastAPI
-async def get_redis() -> Redis:
+async def get_redis() -> Optional[Redis]:
     """FastAPI 依赖注入函数"""
-    return await redis_manager.get_redis()
+    try:
+        redis = await redis_manager.get_redis()
+        # Test connection
+        await redis.ping()
+        return redis
+    except (ConnectionError, RedisError) as e:
+        logger.warning(f"Redis unavailable: {e}. Continuing without Redis.")
+        return None
 
 
 # 便捷方法：使用连接字符串方式

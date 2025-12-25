@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { AuthProvider } from "@/contexts/auth-context";
 import "../globals.css";
 
 const manrope = Manrope({
@@ -49,7 +50,7 @@ export default async function LocaleLayout({
       </head>
       <body className={`${manrope.variable} antialiased font-sans`}>
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <AuthProvider>{children}</AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

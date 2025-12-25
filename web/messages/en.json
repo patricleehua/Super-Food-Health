@@ -45,6 +45,7 @@
       "fiber": "Fiber",
       "sugar": "Sugar",
       "calories": "Calories",
+      "sodium": "Sodium",
       "water": "Water"
     },
     "triggerFoods": {
@@ -52,11 +53,14 @@
       "highImpact": "High Impact",
       "mediumImpact": "Medium Impact",
       "lowImpact": "Low Impact",
+      "frequentimpactImpact": "Frequent Impact",
+      "moderateimpactImpact": "Moderate Impact",
+      "lowimpactImpact": "Low Impact",
       "points": "pts"
     },
     "triggerTimes": {
       "title": "Trigger Times",
-      "description": "Analysis of your past 30 days shows <strong>40%</strong> of excess sugar consumption occurred during late evening hours."
+      "description": "Analysis of your past 30 days shows 40% of excess sugar consumption occurred during late evening hours."
     }
   },
   "goalSimulation": {
@@ -74,5 +78,32 @@
   "settings": {
     "title": "Settings",
     "subtitle": "Customize your app preferences"
+  },
+  "login": {
+    "heroTitle": "Unlock Your Health Potential",
+    "heroDescription": "Dive deep into your health analytics. Visualize trends, manage subscriptions, and secure your future with data-driven insights.",
+    "featureAnalysisTitle": "Deep Analysis",
+    "featureAnalysisDesc": "Visualize trends over years.",
+    "featureSecureTitle": "Secure Data",
+    "featureSecureDesc": "Encrypted & Private.",
+    "copyright": "© 2024 HealthTrack Inc.",
+    "welcomeBack": "Welcome Back",
+    "welcomeDescription": "Enter your details to access your dashboard.",
+    "loginTab": "Log In",
+    "signupTab": "Sign Up",
+    "emailLabel": "Email Address / Username",
+    "emailPlaceholder": "name@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "••••••••",
+    "forgotPassword": "Forgot password?",
+    "loginButton": "Log In",
+    "orContinueWith": "Or continue with",
+    "googleAlt": "Google",
+    "appleAlt": "Apple",
+    "wechatAlt": "WeChat",
+    "termsPrefix": "By logging in, you agree to our",
+    "termsOfService": "Terms of Service",
+    "termsAnd": "and",
+    "privacyPolicy": "Privacy Policy"
   }
 }

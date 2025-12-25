@@ -1,14 +1,31 @@
 "use client";
 
-import { Link, usePathname } from "@/i18n/routing";
+import { Link, usePathname, useRouter } from "@/i18n/routing";
 import { BarChart3, Heart, Book, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "./language-switcher";
+import { useAuth } from "@/contexts/auth-context";
+import { useState } from "react";
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const t = useTranslations();
+  const { logout } = useAuth();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+      // Use auth context logout (handles API call, token cleanup, and redirect)
+      await logout();
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
 
   const navigationItems = [
     { name: t("navigation.dashboard"), href: "/dashboard", icon: BarChart3 },
@@ -55,8 +72,14 @@ export function Sidebar() {
         </div>
         <div className="flex items-center gap-4">
           <LanguageSwitcher />
-          <button className="hidden md:flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/10 text-[#111814] dark:text-primary hover:bg-primary hover:text-[#111814] transition-all text-sm font-bold leading-normal tracking-[0.015em]">
-            <span className="truncate">{t("common.logout")}</span>
+          <button
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+            className="hidden md:flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary/10 text-[#111814] dark:text-primary hover:bg-primary hover:text-[#111814] transition-all text-sm font-bold leading-normal tracking-[0.015em] disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span className="truncate">
+              {isLoggingOut ? "..." : t("common.logout")}
+            </span>
           </button>
           <div
             className="bg-center bg-no-repeat bg-cover rounded-full w-10 h-10 border-2 border-primary"

@@ -45,6 +45,7 @@
       "fiber": "纤维",
       "sugar": "糖",
       "calories": "卡路里",
+      "sodium": "钠",
       "water": "水"
     },
     "triggerFoods": {
@@ -52,11 +53,14 @@
       "highImpact": "高影响",
       "mediumImpact": "中等影响",
       "lowImpact": "低影响",
+      "frequentimpactImpact": "频繁影响",
+      "moderateimpactImpact": "中等影响",
+      "lowimpactImpact": "低影响",
       "points": "分"
     },
     "triggerTimes": {
       "title": "触发时间",
-      "description": "对过去30天的分析显示，<strong>40%</strong>的过量糖摄入发生在深夜时段。"
+      "description": "对过去30天的分析显示，40%的过量糖摄入发生在深夜时段。"
     }
   },
   "goalSimulation": {
@@ -74,5 +78,32 @@
   "settings": {
     "title": "设置",
     "subtitle": "自定义您的应用偏好"
+  },
+  "login": {
+    "heroTitle": "释放您的健康潜力",
+    "heroDescription": "深入了解您的健康分析。可视化趋势，管理订阅，并通过数据驱动的见解保障您的未来。",
+    "featureAnalysisTitle": "深度分析",
+    "featureAnalysisDesc": "多年趋势可视化。",
+    "featureSecureTitle": "数据安全",
+    "featureSecureDesc": "加密与隐私保护。",
+    "copyright": "© 2024 健康追踪公司",
+    "welcomeBack": "欢迎回来",
+    "welcomeDescription": "输入您的详细信息以访问您的仪表盘。",
+    "loginTab": "登录",
+    "signupTab": "注册",
+    "emailLabel": "邮箱地址 / 用户名",
+    "emailPlaceholder": "name@example.com",
+    "passwordLabel": "密码",
+    "passwordPlaceholder": "••••••••",
+    "forgotPassword": "忘记密码？",
+    "loginButton": "登录",
+    "orContinueWith": "或继续使用",
+    "googleAlt": "谷歌",
+    "appleAlt": "苹果",
+    "wechatAlt": "微信",
+    "termsPrefix": "登录即表示您同意我们的",
+    "termsOfService": "服务条款",
+    "termsAnd": "和",
+    "privacyPolicy": "隐私政策"
   }
 }

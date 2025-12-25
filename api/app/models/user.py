@@ -1,5 +1,4 @@
 from sqlalchemy import Column, String, Boolean, Integer, DateTime
-from sqlalchemy.orm import relationship
 from app.models.base import BaseModel
 
 
@@ -8,6 +7,7 @@ class User(BaseModel):
 
     id = Column(String, primary_key=True, index=True)
     email = Column(String, unique=True, index=True, nullable=True)
+    hashed_password = Column(String, nullable=True)
     phone = Column(String, unique=True, index=True, nullable=True)
     wx_openid = Column(String, unique=True, index=True, nullable=True)
     wx_unionid = Column(String, unique=True, index=True, nullable=True)
@@ -15,9 +15,6 @@ class User(BaseModel):
     is_active = Column(Boolean, default=True)
     is_superuser = Column(Boolean, default=False)
     last_login = Column(DateTime(timezone=True), nullable=True)
-
-    # Relationships
-    profile = relationship("UserProfile", back_populates="user", uselist=False)
 
 
 class UserProfile(BaseModel):
@@ -35,9 +32,6 @@ class UserProfile(BaseModel):
     diet_preferences = Column(String, nullable=True)  # comma-separated tags
     allergens_avoid = Column(String, nullable=True)  # comma-separated tags
     timezone = Column(String, default="Asia/Shanghai")
-
-    # Relationships
-    user = relationship("User", back_populates="profile")
 
 
 class UserConsent(BaseModel):

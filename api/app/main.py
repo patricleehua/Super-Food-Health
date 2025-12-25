@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.api.v1.api import api_router
 from app.core.database import init_database
+from app.core.auth_middleware import AuthenticationMiddleware
 
 # 在应用启动时初始化数据库
 print("\n" + "="*60)
@@ -26,14 +27,29 @@ app = FastAPI(
     debug=settings.DEBUG,
 )
 
-# CORS middleware
+# CORS middleware - Configure allowed origins
+allowed_origins = [
+    "http://localhost:3000",  # Next.js dev server
+    "http://localhost:3001",  # Alternative port
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:3001",
+]
+
+# In production, replace with actual domain
+if settings.DEBUG:
+    allowed_origins.append("*")  # Allow all in development
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins if not settings.DEBUG else ["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
+
+# Authentication middleware (validates JWT for protected endpoints)
+app.add_middleware(AuthenticationMiddleware)
 
 # Include API routes
 app.include_router(api_router, prefix="/api/v1")

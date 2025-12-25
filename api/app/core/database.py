@@ -7,7 +7,7 @@ import sys
 import logging
 from typing import Optional
 from sqlalchemy import create_engine, text
-from sqlalchemy.ext.asyncio import create_async_engine as create_async
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy.pool import StaticPool
 
@@ -78,7 +78,7 @@ async_database_url = DATABASE_URL.replace(
     "postgresql+psycopg2://",
     "postgresql+asyncpg://"
 )
-async_engine = create_async(async_database_url)
+async_engine = create_async_engine(async_database_url)
 
 # 创建会话工厂
 SessionLocal = sessionmaker(
@@ -90,7 +90,7 @@ SessionLocal = sessionmaker(
 # 创建异步会话工厂
 AsyncSessionLocal = sessionmaker(
     bind=async_engine,
-    class_=type('AsyncSession', (), {}),
+    class_=AsyncSession,
     expire_on_commit=False
 )
 
